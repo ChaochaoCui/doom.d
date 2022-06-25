@@ -62,3 +62,6 @@
   (add-to-list 'projectile-project-root-files-bottom-up "pubspec.yaml")
   (add-to-list 'projectile-project-root-files-bottom-up "BUILD")
   (add-to-list 'projectile-project-root-files-bottom-up ".repo"))
+
+(setq lsp-clangd-binary-path "/usr/bin/clangd")
+(setq lsp-clients-clangd-args '("--header-insertion-decorators=0" "--enable-config"))
