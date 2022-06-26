@@ -65,3 +65,6 @@
 
 (setq lsp-clangd-binary-path "/usr/bin/clangd")
 (setq lsp-clients-clangd-args '("--header-insertion-decorators=0" "--enable-config"))
+(map! :leader
+      (:prefix-map ("t" . "toggle")
+      :desc "Project Read-only mode"               "r" #'projectile-toggle-project-read-only))
