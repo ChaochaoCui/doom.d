@@ -23,8 +23,8 @@
 ;;       doom-variable-pitch-font (font-spec :family "sans" :size 13))
 
 (setq doom-font (font-spec :family "Hack Nerd Font" :size 16 :weight 'semi-light)
-       doom-variable-pitch-font (font-spec :family "Hack Nerd Font" :size 16)
-       ivy-posframe-font (font-spec :family "Hack Nerd Font" :size 16))
+      doom-variable-pitch-font (font-spec :family "Hack Nerd Font" :size 16)
+      ivy-posframe-font (font-spec :family "Hack Nerd Font" :size 16))
 
 ;; There are two ways to load a theme. Both assume the theme is installed and
 ;; available. You can either set `doom-theme' or manually load a theme with the
@@ -64,7 +64,13 @@
   (add-to-list 'projectile-project-root-files-bottom-up ".repo"))
 
 (setq lsp-clangd-binary-path "/usr/bin/clangd")
-(setq lsp-clients-clangd-args '("--header-insertion-decorators=0" "--enable-config"))
+(setq lsp-clients-clangd-args '("--header-insertion-decorators=0" "--enable-config" "-log=verbose"))
 (map! :leader
       (:prefix-map ("t" . "toggle")
-      :desc "Project Read-only mode"               "r" #'projectile-toggle-project-read-only))
+       :desc "Project Read-only mode"               "r" #'projectile-toggle-project-read-only))
+
+;; Compile.
+(after! compile
+  ;; The ANSI color hook leads to errors when compiling Haskell code.
+  (remove-hook 'compilation-filter-hook #'doom-apply-ansi-color-to-compilation-buffer-h)
+  (remove-hook 'compilation-filter-hook #'ansi-color-compilation-filter))
