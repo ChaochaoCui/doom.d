@@ -60,11 +60,19 @@
 
 (with-eval-after-load 'projectile
   (add-to-list 'projectile-project-root-files-bottom-up "pubspec.yaml")
-  (add-to-list 'projectile-project-root-files-bottom-up "BUILD")
-  (add-to-list 'projectile-project-root-files-bottom-up ".repo"))
+  (add-to-list 'projectile-project-root-files-bottom-up "BUILD"))
 
 (setq lsp-clangd-binary-path "/usr/bin/clangd")
-(setq lsp-clients-clangd-args '("--header-insertion-decorators=0" "--enable-config" "-log=verbose"))
+(setq lsp-clients-clangd-args '("-j=3"
+				"--background-index"
+				"--clang-tidy"
+				"--completion-style=detailed"
+				"--header-insertion=never"
+				"--header-insertion-decorators=0"
+				"--enable-config"
+				"-log=verbose"))
+
+(after! lsp-clangd (set-lsp-priority! 'clangd 2))
 (map! :leader
       (:prefix-map ("t" . "toggle")
        :desc "Project Read-only mode"               "r" #'projectile-toggle-project-read-only))
